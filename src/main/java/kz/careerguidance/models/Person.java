@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.util.Collection;
 import java.util.List;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import kz.careerguidance.models.role.Role;
 import lombok.*;
@@ -24,9 +26,15 @@ public class Person implements UserDetails {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
-  @Size(min = 2, max = 20, message = "2 и 20")
+  @Size(min = 2, max = 20, message = "Name must be between 2 and 20 characters")
   private String username;
+
+  @Email(message = "Invalid email")
+  @NotNull(message = "Email cannot be null")
   private String email;
+
+  @NotNull(message = "Password cannot be null")
+  @Size(min = 8, max = 16, message = "Password must be between 8 and 16 characters")
   private String password;
   @Enumerated(EnumType.STRING)
   private Role role;
