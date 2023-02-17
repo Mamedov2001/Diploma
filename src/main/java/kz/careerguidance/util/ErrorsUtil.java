@@ -5,21 +5,22 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class ErrorsUtil {
     public static void returnErrorsToClient(BindingResult bindingResult) {
-        StringBuilder errorMessage = new StringBuilder();
+//        StringBuilder errorMessage = new StringBuilder();
 
         List<FieldError> errors = bindingResult.getFieldErrors();
-        errors.forEach(error -> errorMessage.append(error.getField()).append(" - ").append(error.getDefaultMessage() == null ? error.getCode() : error.getDefaultMessage()).append("; "));
-
-            throw new ClassException(errorMessage.toString());
+        for (FieldError fieldError : errors) {
+            throw new NotFoundException(fieldError.getDefaultMessage());
+        }
+//        errors.forEach(error -> errorMessage.append(error.getField()).append(" - ").append(error.getDefaultMessage() == null ? error.getCode() : error.getDefaultMessage()).append("; "));
+//            throw new NotFoundException(errorMessage.toString());
 
     }
 
-    public static ResponseEntity<ErrorResponse> exceptionHandler(ClassException e) {
+    public static ResponseEntity<ErrorResponse> exceptionHandler(NotFoundException e) {
         ErrorResponse itemErrorResponse = new ErrorResponse(
                 e.getMessage()
         );

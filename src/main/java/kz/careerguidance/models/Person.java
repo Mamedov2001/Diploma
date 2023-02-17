@@ -33,15 +33,16 @@ public class Person implements UserDetails {
   @NotNull(message = "Email cannot be null")
   private String email;
 
-  @NotNull(message = "Password cannot be null")
-  @Size(min = 8, max = 16, message = "Password must be between 8 and 16 characters")
+//  @NotNull(message = "Password cannot be null")
+//  @Size(min = 8, max = 16, message = "Password must be between 8 and 16 characters")
   private String password;
   @Enumerated(EnumType.STRING)
   private Role role;
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return List.of(new SimpleGrantedAuthority(role.name()));
+    System.err.println(this.getRole().toString());
+    return List.of(new SimpleGrantedAuthority(this.getRole().toString()));
   }
 
   @Override

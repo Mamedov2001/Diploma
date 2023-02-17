@@ -4,8 +4,10 @@ import java.util.Optional;
 
 import kz.careerguidance.models.Person;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface PeopleRepository extends JpaRepository<Person, Integer> {
+@Repository
+public interface PeopleRepository extends JpaRepository<Person, Long> {
 
   Optional<Person> findByEmail(String email);
 

@@ -9,7 +9,7 @@ import kz.careerguidance.services.auth.AuthenticationService;
 import kz.careerguidance.util.validators.LoginValidator;
 import kz.careerguidance.util.validators.RegistrationValidator;
 import kz.careerguidance.util.ErrorResponse;
-import kz.careerguidance.util.ClassException;
+import kz.careerguidance.util.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
@@ -45,7 +45,7 @@ public class AuthenticationController {
   }
 
   @PostMapping("/login")
-  public Map<String, String> authenticate(
+  public ResponseEntity<LoginResponse> login(
       @RequestBody @Valid LoginRequestDTO request,
       BindingResult bindingResult
   ) {
@@ -55,13 +55,9 @@ public class AuthenticationController {
       returnErrorsToClient(bindingResult);
     }
 
-    return service.authenticate(request);
+    return ResponseEntity.ok(service.authenticate(request));
   }
 
-  @ExceptionHandler
-  private ResponseEntity<ErrorResponse> handler(ClassException ex) {
-    return exceptionHandler(ex);
-  }
 
 
   private Person convertToPerson(RegisterRequestDTO request) {

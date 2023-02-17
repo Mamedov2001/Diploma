@@ -1,17 +1,10 @@
 package kz.careerguidance.controllers;
 
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("people")
 public class PeopleController {
-    @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
-    public String a() {
-        return "Hello admin";
-    }
-
 }
