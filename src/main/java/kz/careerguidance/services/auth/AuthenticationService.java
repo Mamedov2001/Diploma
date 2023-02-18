@@ -5,7 +5,7 @@ import kz.careerguidance.dto.requests.RegisterRequestDTO;
 import kz.careerguidance.dto.responses.LoginResponse;
 import kz.careerguidance.models.Person;
 import kz.careerguidance.repositories.PeopleRepository;
-import kz.careerguidance.util.NotFoundException;
+import kz.careerguidance.util.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -14,7 +14,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Map;
 import java.util.Optional;
 
 @Service

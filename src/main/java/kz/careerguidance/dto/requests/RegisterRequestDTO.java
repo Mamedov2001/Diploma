@@ -8,13 +8,15 @@ import jakarta.validation.constraints.Size;
 import kz.careerguidance.models.role.Role;
 import lombok.*;
 
+import java.io.Serializable;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class RegisterRequestDTO {
+public class RegisterRequestDTO implements Serializable {
   @NotNull(message = "Имя не должно быть пустым")
   @Size(min = 2, max = 20, message = "Имя должно содержать между 2 и 20 символами")
   private String username;

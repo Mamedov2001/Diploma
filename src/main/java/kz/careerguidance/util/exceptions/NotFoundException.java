@@ -1,4 +1,4 @@
-package kz.careerguidance.util;
+package kz.careerguidance.util.exceptions;
 
 public class NotFoundException extends RuntimeException{
     public NotFoundException(String errorMessage) {

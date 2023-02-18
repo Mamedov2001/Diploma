@@ -10,14 +10,14 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UniversityRepository extends JpaRepository<University, Long> {
+public interface UniversitiesRepository extends JpaRepository<University, Long> {
 
     Optional<University> findByName(String name);
     @Query(value = "select u.* from university u join university_faculty uf on u.id = uf.university_id" +
             "         join faculty f on f.id = uf.faculty_id" +
             "         join speciality s on f.id = s.faculty_id" +
             "         where s.name = :speciality", nativeQuery = true)
-    Optional<University> findBySpeciality(@Param("speciality") String speciality);
+    List<University> findBySpeciality(@Param("speciality") String speciality);
 
 
     // todo change this to find all universities with faculty name
@@ -25,7 +25,7 @@ public interface UniversityRepository extends JpaRepository<University, Long> {
             "         join faculty f on f.id = uf.faculty_id" +
             "         join speciality s on f.id = s.faculty_id" +
             "         where s.name = :speciality", nativeQuery = true)
-    Optional<University> findByFaculty(String speciality);
+    List<University> findByFaculty(String speciality);
 
-    Optional<University> findByNameStartingWith(String speciality);
+    List<University> findByNameStartingWith(String str);
 }

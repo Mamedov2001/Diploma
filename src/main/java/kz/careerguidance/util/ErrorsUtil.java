@@ -1,5 +1,6 @@
 package kz.careerguidance.util;
 
+import kz.careerguidance.util.exceptions.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;

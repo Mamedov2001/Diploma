@@ -8,17 +8,15 @@ import kz.careerguidance.models.Person;
 import kz.careerguidance.services.auth.AuthenticationService;
 import kz.careerguidance.util.validators.LoginValidator;
 import kz.careerguidance.util.validators.RegistrationValidator;
-import kz.careerguidance.util.ErrorResponse;
-import kz.careerguidance.util.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Map;
-
-import static kz.careerguidance.util.ErrorsUtil.exceptionHandler;
 import static kz.careerguidance.util.ErrorsUtil.returnErrorsToClient;
 
 @RestController

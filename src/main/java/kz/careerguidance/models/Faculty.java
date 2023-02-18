@@ -19,17 +19,17 @@ public class Faculty {
     private Long id;
 
     @NotNull(message = "Faculty name cannot be null")
-    @Size(min = 3, max = 20, message = "Faculty name must")
+    @Size(min = 3, max = 100, message = "Faculty name must contain between 3 and 100 characters")
     private String name;
 
     @NotNull(message = "Faculty description cannot be null")
     @Size(min = 3, max = 200, message = "Faculty description must")
     private String description;
 
-    @ManyToMany(mappedBy = "faculties")
+    @ManyToMany(mappedBy = "faculties", cascade = CascadeType.ALL)
     private List<University> universities;
 
-    @OneToMany(mappedBy = "faculty")
+    @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL)
     private List<Speciality> specialities;
 
     public Faculty(String name, String description) {
