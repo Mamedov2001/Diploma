@@ -1,0 +1,520 @@
+{
+	"info": {
+		"_postman_id": "687ad2fd-d38c-46f0-ae2d-0fdaf8702adb",
+		"name": "Diploma",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23969024"
+	},
+	"item": [
+		{
+			"name": "PeopleController",
+			"item": [
+				{
+					"name": "New Request",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJxMWFxczMxMTEiLCJpYXQiOjE2NzY1NDg4MzUsImV4cCI6MTY3NjU1MDI3NX0.fA_fF_FHQ1VoYJOzMFNIF158NPYkYJqOBIf96c757LI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/universities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"universities"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AuthenticationController",
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"q1aqs3111\",\r\n    \"email\": \"sdfsd@mail.ru\",\r\n    \"password\": \"111111111\",\r\n    \"role\": \"1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/registration",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"q1aqs3111\",\r\n    \"password\": \"111111111\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UniversityController",
+			"item": [
+				{
+					"name": "getAllUniversities",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyMXFlc3MzMTEzMiIsImlhdCI6MTY3NjcyMTM2OSwiZXhwIjoxNjc2NzIyODA5fQ.5AxCZUADswD3MbOCJMO1m2nlYgR0XpREqOn8riYv4mk",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/universities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"universities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createUniversity",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyMXFzczMxMTMyIiwiaWF0IjoxNjc2NzAyODI0LCJleHAiOjE2NzY3MDQyNjR9.3Ij6_WKo0In4zbpijjKmnBt-_EDhk2-OgWF7LFSr_MM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"BAYZAK\",\r\n    \"description\": \"kjfdlghfkjdhgksjdfhskdhlfkjrhskjfjlhfhdgkjlhdsfkgdfl;kjgk;dfjgldsflkjghlfdjhdfkjgkdfjgjkdfhgksdlflkgjdfkljdsfklgkjsdfklg\",\r\n    \"address\": \"Zhandosova Manasa\",\r\n    \"city\": \"Almaty\",\r\n    \"rating\": 2.0,\r\n    \"link\": \"www.google.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/universities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"universities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "searchUniversitiesStartingWith",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyMXFzczMxMTMyIiwiaWF0IjoxNjc2NzA4MDk3LCJleHAiOjE2NzY3MDk1Mzd9.C_yScm7hDlrZw8Gf4EjBUtk0K7x9L5iWAW0PGKDKzgI",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/universities/search?name=IITU",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"universities",
+								"search"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "IITU"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateUniversity",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyMXFlc3MzMTEzMiIsImlhdCI6MTY3NjcxNzIxNywiZXhwIjoxNjc2NzE4NjU3fQ.epfPB2tE79v6A8gG2GJ1sbOgGEpGJmiD95sb3TffRQg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"BAYZAK2\",\r\n    \"description\": \"kjfdlghfkjdhgksjdfhskdhlfkjrhskjfjlhfhdgkjlhdsfkgdfl;kjgk;dfjgldsflkjghlfdjhdfkjgkdfjgjkdfhgksdlflkgjdfkljdsfklgkjsdfklg\",\r\n    \"address\": \"Zhandosova Manasa\",\r\n    \"city\": \"Almaty\",\r\n    \"rating\": 2.0,\r\n    \"link\": \"www.google.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/universities/1/edit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"universities",
+								"1",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUniversity",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyczFxZXNzMzExMzIiLCJpYXQiOjE2NzY3MzUxMjQsImV4cCI6MTY3NjczNjU2NH0.uV-Zgz-lHf8UXzvXuijwOJq96m2GeNp5SOjjU10hEtM",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/universities/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"universities",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AdminController",
+			"item": [
+				{
+					"name": "admin",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "FacultiesController",
+			"item": [
+				{
+					"name": "getAllFaculties",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "createFaculty",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyczFxZXNzMzExMzIiLCJpYXQiOjE2NzY3MzE4NzYsImV4cCI6MTY3NjczMzMxNn0.qLFknMM5LLcx3XDwou-bdFfTxGkmTzq2xSZPGqcbDak",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"IT\",\r\n    \"description\": \"dklfhvkjdfljvjdkfhljdkffhlkfjk\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/faculties",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"faculties"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateFaculty",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUniversity",
+					"request": {
+						"method": "GET",
+						"header": []
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SpecialitiesController",
+			"item": [
+				{
+					"name": "getAllSpecialities",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyczFxZXNzMzExMzIiLCJpYXQiOjE2NzY3MzE4NzYsImV4cCI6MTY3NjczMzMxNn0.qLFknMM5LLcx3XDwou-bdFfTxGkmTzq2xSZPGqcbDak",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/specialities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"specialities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateSpeciality",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzMXFlc3MzMTEzMiIsImlhdCI6MTY3NjczOTU5MCwiZXhwIjoxNjc2NzQxMDMwfQ.AA_LJR-kxQ3qInY7mKa8PbSz7TGIZF9sE6sW2bZOJN4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\": \"4DKV49s3\",\r\n    \"name\": \"ISdsseS\",\r\n    \"description\": \",dfoxjdfhjkjhfkdgdfghgd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/specialities/1/edit",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"specialities",
+								"1",
+								"edit"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteSpeciality",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJzMXFlc3MzMTEzMiIsImlhdCI6MTY3NjczOTU5MCwiZXhwIjoxNjc2NzQxMDMwfQ.AA_LJR-kxQ3qInY7mKa8PbSz7TGIZF9sE6sW2bZOJN4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/specialities/1/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"specialities",
+								"1",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createSpeciality",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJyczFxZXNzMzExMzIiLCJpYXQiOjE2NzY3MzE4NzYsImV4cCI6MTY3NjczMzMxNn0.qLFknMM5LLcx3XDwou-bdFfTxGkmTzq2xSZPGqcbDak",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"code\": \"4DKJ4954\",\r\n    \"name\": \"Information Systems\",\r\n    \"description\": \"fkjdghuidfufljdkfjlkdfnxjgdlkxjkgjdf,hgd\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/specialities",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"specialities"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
