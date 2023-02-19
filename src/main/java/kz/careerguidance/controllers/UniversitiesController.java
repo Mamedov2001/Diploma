@@ -2,7 +2,10 @@ package kz.careerguidance.controllers;
 
 import jakarta.validation.Valid;
 import kz.careerguidance.dto.requests.UniversityDTO;
+import kz.careerguidance.models.Faculty;
+import kz.careerguidance.models.Speciality;
 import kz.careerguidance.models.University;
+import kz.careerguidance.services.FacultiesService;
 import kz.careerguidance.services.UniversitiesService;
 import kz.careerguidance.util.exceptions.NotFoundException;
 import kz.careerguidance.util.validators.UniversityValidator;
@@ -23,6 +26,7 @@ import static kz.careerguidance.util.ErrorsUtil.returnErrorsToClient;
 @RequestMapping("/universities")
 public class UniversitiesController {
     private final UniversitiesService universitiesService;
+    private final FacultiesService facultiesService;
     private final ModelMapper modelMapper;
     private final UniversityValidator universityValidator;
 
@@ -79,6 +83,17 @@ public class UniversitiesController {
     @PostMapping("/{id}/delete")
     public ResponseEntity<HttpStatus> deleteUniversity(@PathVariable Long id) {
         universitiesService.delete(id);
+
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/addFaculty")
+    public ResponseEntity<HttpStatus> addFaculty(@PathVariable Long id, @RequestParam Long facultyId) {
+        Faculty faculty = facultiesService.findById(facultyId);
+        University university = universitiesService.findById(id);
+        university.getFaculties().add(faculty);
+
+        universitiesService.save(university);
 
         return ResponseEntity.ok(HttpStatus.OK);
     }

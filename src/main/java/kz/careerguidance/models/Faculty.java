@@ -1,5 +1,6 @@
 package kz.careerguidance.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -27,7 +28,8 @@ public class Faculty {
     @Size(min = 3, max = 200, message = "Faculty description must")
     private String description;
 
-    @ManyToMany(mappedBy = "faculties", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "faculties", cascade = CascadeType.REFRESH)
+    @JsonIgnore
     private List<University> universities;
 
     @OneToMany(mappedBy = "faculty", cascade = CascadeType.REFRESH)

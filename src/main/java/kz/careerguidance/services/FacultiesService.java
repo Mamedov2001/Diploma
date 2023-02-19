@@ -1,9 +1,11 @@
 package kz.careerguidance.services;
-import kz.careerguidance.dto.requests.SpecialityDTO;
+
 import kz.careerguidance.models.Faculty;
 import kz.careerguidance.models.Speciality;
+import kz.careerguidance.models.University;
 import kz.careerguidance.repositories.FacultiesRepository;
 import kz.careerguidance.repositories.SpecialitiesRepository;
+import kz.careerguidance.repositories.UniversitiesRepository;
 import kz.careerguidance.util.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -11,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class FacultiesService {
     private final FacultiesRepository facultiesRepository;
     private final SpecialitiesRepository specialitiesRepository;
+    private final UniversitiesRepository universitiesRepository;
 
     @Transactional
     public void save (Faculty faculty) {
@@ -29,16 +31,20 @@ public class FacultiesService {
 
     @Transactional
     public void delete (Long id) {
-        if (facultiesRepository.existsById(id)) {
-            List<Speciality> specialitiesToChange = specialitiesRepository.findByFacultyId(id);
-            specialitiesToChange.forEach(speciality -> speciality.setFaculty(null));
-            specialitiesRepository.saveAll(specialitiesToChange);
-//            specialitiesRepository.save(specialitiesRepository.findByFacultyId(id).forEach(faculty -> faculty.setFaculty(null)));
-            facultiesRepository.deleteById(id);
-        }
-        else {
-            throw new NotFoundException("Faculty doesn't exist");
-        }
+            try {
+                Optional<Faculty> facultyToDelete = facultiesRepository.findById(id);
+                List<Speciality> specialitiesToChange = specialitiesRepository.findByFacultyId(id);
+                List<University> universitiesToChange = universitiesRepository.findByFaculties(facultyToDelete.get());
+                specialitiesToChange.forEach(speciality -> speciality.setFaculty(null));
+
+                universitiesToChange.forEach(university -> university.getFaculties().remove(facultyToDelete.get()));
+                universitiesRepository.saveAll(universitiesToChange);
+                specialitiesRepository.saveAll(specialitiesToChange);
+                facultiesRepository.deleteById(id);
+            }
+            catch (Exception e) {
+                throw new NotFoundException("Faculty doesn't exist");
+            }
     }
 
     public Faculty findById (Long id) {
@@ -50,30 +56,11 @@ public class FacultiesService {
     }
 
     public List<Faculty> findAll () throws NotFoundException {
-        List<Faculty> facultyList = facultiesRepository.findAll();
-        if (facultyList.isEmpty()) {
+        try {
+            return facultiesRepository.findAll();
+        }
+        catch (Exception e){
             throw new NotFoundException("Faculties not found");
         }
-        else{
-            return facultyList;
-        }
     }
-
-
-//    @Transactional
-//    public void addSpeciality(Long facultyId, Long specialityId) {
-//
-//        Faculty faculty = facultiesRepository.findById(facultyId).orElseThrow(() -> new NotFoundException("Faculty not found"));
-//        Speciality speciality = specialitiesRepository.findById(specialityId).orElseThrow(() -> new NotFoundException("Speciality not found"));
-//
-//        faculty.getSpecialities().addAll(faculty
-//                .getSpecialities()
-//                .stream()
-//                .map(s -> {
-//                    speciality.setFaculty(faculty);
-//                    return speciality;
-//                }).collect(Collectors.toList()));
-//        facultiesRepository.save(faculty);
-//        specialitiesRepository.save(speciality);
-//    }
 }

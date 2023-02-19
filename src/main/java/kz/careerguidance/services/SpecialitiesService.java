@@ -43,11 +43,11 @@ public class SpecialitiesService {
 
     @Transactional
     public void delete(Long id) {
-        if (specialitiesRepository.existsById(id)) {
+        try {
             specialitiesRepository.deleteById(id);
         }
-        else {
-            throw new NotFoundException("Speciality not found");
+        catch (Exception e) {
+            throw new NotFoundException("Speciality with id " + id + " not found");
         }
     }
 

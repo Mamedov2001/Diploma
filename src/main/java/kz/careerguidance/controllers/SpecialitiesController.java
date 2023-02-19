@@ -79,6 +79,9 @@ public class SpecialitiesController {
 
     @PostMapping("/{id}/addFaculty")
     public ResponseEntity<HttpStatus> addFaculty(@PathVariable Long id, @RequestParam Long idFaculty) {
+        if (specialitiesService.findById(id) == null) {
+            throw new NotFoundException("Speciality with id " + id + " not found");
+        }
         Speciality speciality = specialitiesService.findById(id);
         speciality.setFaculty(facultiesService.findById(idFaculty));
         specialitiesService.save(speciality);

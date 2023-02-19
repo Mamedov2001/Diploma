@@ -6,8 +6,10 @@ import kz.careerguidance.dto.requests.FacultyDTO;
 import kz.careerguidance.dto.requests.SpecialityDTO;
 import kz.careerguidance.models.Faculty;
 import kz.careerguidance.models.Speciality;
+import kz.careerguidance.models.University;
 import kz.careerguidance.services.FacultiesService;
 import kz.careerguidance.services.SpecialitiesService;
+import kz.careerguidance.services.UniversitiesService;
 import kz.careerguidance.util.exceptions.NotFoundException;
 import kz.careerguidance.util.validators.FacultyValidator;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +29,7 @@ import static kz.careerguidance.util.ErrorsUtil.returnErrorsToClient;
 public class FacultiesController {
     private final FacultiesService facultiesService;
     private final SpecialitiesService specialitiesService;
+    private final UniversitiesService universitiesService;
     private final FacultyValidator facultyValidator;
     private final ModelMapper modelMapper;
 
@@ -82,15 +85,31 @@ public class FacultiesController {
     @PostMapping("/{facultyId}/addSpeciality")
     public ResponseEntity<HttpStatus> addSpeciality(@PathVariable Long facultyId,
                                                     @RequestParam Long specialityId) {
+        if (specialitiesService.findById(specialityId) != null){
+            Faculty faculty = facultiesService.findById(facultyId);
+            List<Speciality> specialities = faculty.getSpecialities();
+            specialities.add(specialitiesService.findById(specialityId));
+            faculty.setSpecialities(specialities);
+            Speciality speciality = specialitiesService.findById(specialityId);
+            speciality.setFaculty(faculty);
+            specialitiesService.save(speciality);
+            facultiesService.save(faculty);
+        }
+        else {
+            throw new NotFoundException("Speciality with id: " + specialityId + " not found");
+        }
 
-        Faculty faculty = facultiesService.findById(facultyId);
-        List<Speciality> specialities = faculty.getSpecialities();
-        specialities.add(specialitiesService.findById(specialityId));
-        faculty.setSpecialities(specialities);
-        Speciality speciality = specialitiesService.findById(specialityId);
-        speciality.setFaculty(faculty);
-        specialitiesService.save(speciality);
-        facultiesService.save(faculty);
+
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @PostMapping("/{id}/addUniversity")
+    public ResponseEntity<HttpStatus> addFaculty(@PathVariable Long id, @RequestParam Long universityId) {
+            Faculty faculty = facultiesService.findById(id);
+            University university = universitiesService.findById(universityId);
+            university.getFaculties().add(faculty);
+
+            universitiesService.save(university);
 
         return ResponseEntity.ok(HttpStatus.OK);
     }

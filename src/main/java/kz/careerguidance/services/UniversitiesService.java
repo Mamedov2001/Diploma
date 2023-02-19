@@ -61,13 +61,13 @@ public class UniversitiesService {
         return universityList;
     }
 
-    public List<University> findByFaculty(String faculty) {
-        List<University> universityList = universitiesRepository.findByFaculty(faculty);
-        if (universityList.isEmpty()) {
-            throw new NotFoundException("Universities not found");
-        }
-        return universityList;
-    }
+//    public List<University> findByFaculty(String faculty) {
+//        List<University> universityList = universitiesRepository.findByFaculty(faculty);
+//        if (universityList.isEmpty()) {
+//            throw new NotFoundException("Universities not found");
+//        }
+//        return universityList;
+//    }
 
     public List<University> findByNameContaining(String query) {
         List<University> universityList = universitiesRepository.findByNameStartingWith(query);
@@ -76,6 +76,8 @@ public class UniversitiesService {
         }
         return universityList;
     }
+
+
 
 //    public Supplier returnException(String message) {
 //        return () -> new NotFoundException(message);
