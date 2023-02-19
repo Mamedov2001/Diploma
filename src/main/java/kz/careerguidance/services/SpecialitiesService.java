@@ -67,4 +67,8 @@ public class SpecialitiesService {
     public Optional<Speciality> findByCode(String code) {
         return specialitiesRepository.findByCode(code);
     }
+
+    public void addFaculty(Long id, Long idFaculty) {
+
+    }
 }

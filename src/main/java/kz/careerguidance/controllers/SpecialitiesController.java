@@ -3,6 +3,7 @@ package kz.careerguidance.controllers;
 import jakarta.validation.Valid;
 import kz.careerguidance.dto.requests.SpecialityDTO;
 import kz.careerguidance.models.Speciality;
+import kz.careerguidance.services.FacultiesService;
 import kz.careerguidance.services.SpecialitiesService;
 import kz.careerguidance.util.exceptions.NotFoundException;
 import kz.careerguidance.util.validators.SpecialityValidator;
@@ -22,6 +23,7 @@ import static kz.careerguidance.util.ErrorsUtil.returnErrorsToClient;
 @RequestMapping("/specialities")
 public class SpecialitiesController {
     private final SpecialitiesService specialitiesService;
+    private final FacultiesService facultiesService;
     private final SpecialityValidator specialityValidator;
     private final ModelMapper modelMapper;
     @GetMapping
@@ -75,6 +77,13 @@ public class SpecialitiesController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @PostMapping("/{id}/addFaculty")
+    public ResponseEntity<HttpStatus> addFaculty(@PathVariable Long id, @RequestParam Long idFaculty) {
+        Speciality speciality = specialitiesService.findById(id);
+        speciality.setFaculty(facultiesService.findById(idFaculty));
+        specialitiesService.save(speciality);
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
 
 
     public Speciality convertToSpeciality(SpecialityDTO specialityDTO) {

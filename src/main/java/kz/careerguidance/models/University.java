@@ -42,10 +42,11 @@ public class University {
     @NotNull(message = "University link is required")
     private String link;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.REFRESH)
     @JoinTable(name = "university_faculty",
             joinColumns = @JoinColumn(name = "university_id"),
             inverseJoinColumns = @JoinColumn(name = "faculty_id"))
+
     private List<Faculty> faculties;
 
     public University(String name,

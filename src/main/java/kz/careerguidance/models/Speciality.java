@@ -1,6 +1,7 @@
 package kz.careerguidance.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -30,8 +31,9 @@ public class Speciality {
     @Size(min = 20, max = 200, message = "Speciality description should be between 20 and 200 characters")
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")
+    @JsonIgnore
     private Faculty faculty;
 
     public Speciality(String code, String name, String description, Faculty faculty) {

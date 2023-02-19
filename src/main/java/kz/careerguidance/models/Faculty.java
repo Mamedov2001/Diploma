@@ -3,6 +3,7 @@ package kz.careerguidance.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import kz.careerguidance.dto.requests.SpecialityDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,11 +30,12 @@ public class Faculty {
     @ManyToMany(mappedBy = "faculties", cascade = CascadeType.ALL)
     private List<University> universities;
 
-    @OneToMany(mappedBy = "faculty", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "faculty", cascade = CascadeType.REFRESH)
     private List<Speciality> specialities;
 
-    public Faculty(String name, String description) {
+    public Faculty(String name, String description, List<Speciality> specialities) {
         this.name = name;
         this.description = description;
+        this.specialities = specialities;
     }
 }
