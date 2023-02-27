@@ -44,7 +44,7 @@ public class SpecialitiesController {
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
-    @PostMapping("/{id}/edit")
+    @PatchMapping("/{id}")
     public ResponseEntity<HttpStatus> editSpeciality(@PathVariable Long id,
                                                   @RequestBody @Valid SpecialityDTO specialityDTO,
                                                   BindingResult bindingResult) {
@@ -70,7 +70,7 @@ public class SpecialitiesController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteSpeciality(@PathVariable Long id) {
         specialitiesService.delete(id);
 

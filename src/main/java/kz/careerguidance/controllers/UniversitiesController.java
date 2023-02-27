@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +33,7 @@ public class UniversitiesController {
 
     @GetMapping
     public ResponseEntity<List<University>> getAllUniversities() {
-        return ResponseEntity.ok(universitiesService.findAll());
+        return new ResponseEntity<>(universitiesService.findAll(), HttpStatus.FOUND);
     }
 
     @GetMapping("/{id}")
@@ -41,21 +42,22 @@ public class UniversitiesController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<HttpStatus> createUniversity(@RequestBody @Valid UniversityDTO universityDTO, BindingResult bindingResult) {
         universityValidator.validate(convertToUniversity(universityDTO), bindingResult);
         if (bindingResult.hasErrors()) {
             returnErrorsToClient(bindingResult);
         }
         universitiesService.save(convertToUniversity(universityDTO));
-        return ResponseEntity.ok(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED, HttpStatus.CREATED);
     }
 
     @GetMapping("/search")
     public ResponseEntity<List<University>> searchUniversitiesStartingWith(@RequestParam String name) {
-        return ResponseEntity.ok(universitiesService.findByNameContaining(name));
+        return new ResponseEntity<>(universitiesService.findByNameContaining(name), HttpStatus.FOUND);
     }
 
-    @PostMapping("{id}/edit")
+    @PatchMapping("{id}")
     public ResponseEntity<HttpStatus> updateUniversity(@PathVariable Long id,
                                                        @RequestBody @Valid UniversityDTO universityDTO,
                                                        BindingResult bindingResult) {
@@ -80,7 +82,7 @@ public class UniversitiesController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteUniversity(@PathVariable Long id) {
         universitiesService.delete(id);
 

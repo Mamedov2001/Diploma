@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.Set;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -30,12 +32,12 @@ public class Faculty {
 
     @ManyToMany(mappedBy = "faculties", cascade = CascadeType.REFRESH)
     @JsonIgnore
-    private List<University> universities;
+    private Set<University> universities;
 
     @OneToMany(mappedBy = "faculty", cascade = CascadeType.REFRESH)
-    private List<Speciality> specialities;
+    private Set<Speciality> specialities;
 
-    public Faculty(String name, String description, List<Speciality> specialities) {
+    public Faculty(String name, String description, Set<Speciality> specialities) {
         this.name = name;
         this.description = description;
         this.specialities = specialities;

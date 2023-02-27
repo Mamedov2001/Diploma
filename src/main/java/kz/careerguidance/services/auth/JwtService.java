@@ -1,5 +1,6 @@
 package kz.careerguidance.services.auth;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -22,7 +23,12 @@ public class JwtService {
   private String SECRET_KEY;
 
   public String extractUsername(String token) {
-    return extractClaim(token, Claims::getSubject);
+    try {
+      return extractClaim(token, Claims::getSubject);
+    }
+    catch (Exception e) {
+      return null;
+    }
   }
 
   public <T> T extractClaim(String token, Function<Claims, T> claimsResolver) {
@@ -43,14 +49,19 @@ public class JwtService {
         .setClaims(extraClaims)
         .setSubject(userDetails.getUsername())
         .setIssuedAt(new Date(System.currentTimeMillis()))
-        .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+        .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 15)) // 15 minutes
         .signWith(getSignInKey(), SignatureAlgorithm.HS256)
         .compact();
   }
 
   public boolean isTokenValid(String token, UserDetails userDetails) {
-    final String username = extractUsername(token);
-    return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+    try {
+      final String username = extractUsername(token);
+      return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+    }
+    catch (Exception e) {
+      return false;
+    }
   }
 
   private boolean isTokenExpired(String token) {

@@ -11,4 +11,5 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class ErrorResponse {
     private String errorMessage;
+
 }

@@ -20,6 +20,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 import static kz.careerguidance.util.ErrorsUtil.returnErrorsToClient;
 
@@ -51,7 +52,7 @@ public class FacultiesController {
         return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
-    @PostMapping("/{id}/edit")
+    @PatchMapping("/{id}")
     public ResponseEntity<HttpStatus> updateFaculty(@PathVariable Long id,
                                                   @RequestBody @Valid FacultyDTO facultyDTO,
                                                   BindingResult bindingResult) {
@@ -76,7 +77,7 @@ public class FacultiesController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @PostMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteUniversity(@PathVariable Long id) {
         facultiesService.delete(id);
         return ResponseEntity.ok(HttpStatus.OK);
@@ -87,7 +88,7 @@ public class FacultiesController {
                                                     @RequestParam Long specialityId) {
         if (specialitiesService.findById(specialityId) != null){
             Faculty faculty = facultiesService.findById(facultyId);
-            List<Speciality> specialities = faculty.getSpecialities();
+            Set<Speciality> specialities = faculty.getSpecialities();
             specialities.add(specialitiesService.findById(specialityId));
             faculty.setSpecialities(specialities);
             Speciality speciality = specialitiesService.findById(specialityId);

@@ -10,6 +10,7 @@ import kz.careerguidance.util.validators.LoginValidator;
 import kz.careerguidance.util.validators.RegistrationValidator;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,7 +40,7 @@ public class AuthenticationController {
       returnErrorsToClient(bindingResult);
     }
 
-    return ResponseEntity.ok(service.register(request));
+    return new ResponseEntity<>(service.register(request), HttpStatus.OK);
   }
 
   @PostMapping("/login")
@@ -53,10 +54,8 @@ public class AuthenticationController {
       returnErrorsToClient(bindingResult);
     }
 
-    return ResponseEntity.ok(service.authenticate(request));
+    return new ResponseEntity<>(service.authenticate(request), HttpStatus.OK);
   }
-
-
 
   private Person convertToPerson(RegisterRequestDTO request) {
     return modelMapper.map(request, Person.class);

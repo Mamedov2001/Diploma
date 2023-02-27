@@ -44,13 +44,7 @@ public class UniversitiesService {
     }
 
     public List<University> findAll() {
-        List<University> universityList = universitiesRepository.findAll();
-        if (universityList.isEmpty()) {
-            throw new NotFoundException("Universities not found");
-        }
-        else{
-            return universityList;
-        }
+        return universitiesRepository.findAll();
     }
 
     public List<University> findBySpeciality(String speciality) {
@@ -70,11 +64,7 @@ public class UniversitiesService {
 //    }
 
     public List<University> findByNameContaining(String query) {
-        List<University> universityList = universitiesRepository.findByNameStartingWith(query);
-        if (universityList.isEmpty()) {
-            throw new NotFoundException("Universities not found");
-        }
-        return universityList;
+         return universitiesRepository.findByNameStartingWith(query);
     }
 
 
