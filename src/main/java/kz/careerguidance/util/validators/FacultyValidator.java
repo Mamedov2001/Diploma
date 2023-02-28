@@ -22,7 +22,7 @@ public class FacultyValidator implements Validator {
     public void validate(Object target, Errors errors) {
         FacultyDTO faculty = (FacultyDTO) target;
 
-        if(facultiesService.findByName(faculty.getName()).isPresent()) {
+        if(facultiesService.findByName(faculty.getName()) != null) {
             errors.rejectValue("name", "", "Faculty name already exists");
         }
     }

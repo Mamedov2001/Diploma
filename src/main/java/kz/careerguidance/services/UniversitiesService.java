@@ -1,6 +1,8 @@
 package kz.careerguidance.services;
 
+import kz.careerguidance.models.Faculty;
 import kz.careerguidance.models.University;
+import kz.careerguidance.repositories.FacultiesRepository;
 import kz.careerguidance.repositories.UniversitiesRepository;
 import kz.careerguidance.util.exceptions.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +20,19 @@ import static kz.careerguidance.util.ErrorsUtil.returnErrorsToClient;
 @Transactional(readOnly = true)
 public class UniversitiesService {
     private final UniversitiesRepository universitiesRepository;
+    private final FacultiesRepository facultiesRepository;
 
     @Transactional
-    public University save(University university) {
-        return universitiesRepository.save(university);
+    public void save(University university) {
+        universitiesRepository.save(university);
+    }
+    @Transactional
+    public void save(Long facultyId, Long universityId) {
+        universitiesRepository.findById(universityId)
+                .orElseThrow(() -> new NotFoundException("University not found"))
+                .getFaculties().add(facultiesRepository.findById(facultyId)
+                        .orElseThrow(() -> new NotFoundException("Faculty not found"))
+                );
     }
 
     @Transactional

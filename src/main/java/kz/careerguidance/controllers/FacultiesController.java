@@ -62,18 +62,7 @@ public class FacultiesController {
             returnErrorsToClient(bindingResult);
         }
 
-        if (facultiesService.findById(id) != null) {
-            Faculty facultyToChange = facultiesService.findById(id);
-
-            facultyToChange.setName(facultyDTO.getName());
-            facultyToChange.setDescription(facultyDTO.getDescription());
-
-            facultiesService.save(facultyToChange);
-        }
-        else {
-            throw new NotFoundException("Faculty with id: " + id + " not found");
-        }
-
+        facultiesService.save(id, facultyDTO);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
@@ -83,35 +72,17 @@ public class FacultiesController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    @PostMapping("/{facultyId}/addSpeciality")
-    public ResponseEntity<HttpStatus> addSpeciality(@PathVariable Long facultyId,
+    @PostMapping("/{id}/addSpeciality")
+    public ResponseEntity<HttpStatus> addSpeciality(@PathVariable Long id,
                                                     @RequestParam Long specialityId) {
-        if (specialitiesService.findById(specialityId) != null){
-            Faculty faculty = facultiesService.findById(facultyId);
-            Set<Speciality> specialities = faculty.getSpecialities();
-            specialities.add(specialitiesService.findById(specialityId));
-            faculty.setSpecialities(specialities);
-            Speciality speciality = specialitiesService.findById(specialityId);
-            speciality.setFaculty(faculty);
-            specialitiesService.save(speciality);
-            facultiesService.save(faculty);
-        }
-        else {
-            throw new NotFoundException("Speciality with id: " + specialityId + " not found");
-        }
-
-
+        facultiesService.save(id, specialityId);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
     @PostMapping("/{id}/addUniversity")
-    public ResponseEntity<HttpStatus> addFaculty(@PathVariable Long id, @RequestParam Long universityId) {
-            Faculty faculty = facultiesService.findById(id);
-            University university = universitiesService.findById(universityId);
-            university.getFaculties().add(faculty);
-
-            universitiesService.save(university);
-
+    public ResponseEntity<HttpStatus> addUniversity(@PathVariable Long id,
+                                                    @RequestParam Long universityId) {
+        universitiesService.save(id, universityId);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
